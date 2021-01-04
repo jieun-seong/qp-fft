@@ -10,14 +10,18 @@ end
 
 println("#1:N   #2:k   #3:classical   #4:dsy")
 
-for N in 1:2000
+for N in 1:1000
+
+    wt_array = get_wt_array(2*N+1)
+    tot_wt = sum(wt_array)
 
     omega = (sqrt(5)-1)/2
-    x(p) = sin(omega*p)
+    #x(p) = sin(omega*p)
+    x(p) = p+omega+0.15*sin(2*pi*p)
     n = collect(-N:1:N)
     x_n_array = x.(n)
 
-    for k in -10:10
+    for k in -20:20
         
         print(N, "  ", k, "  ")
     
@@ -26,8 +30,7 @@ for N in 1:2000
         print(abs(x_k), "  ")
 
         #DSY
-        wt_array = get_wt_array(2*N+1)
-        tot_wt = sum(wt_array)
+        
         x_k = sum(wt_array.*x_n_array.*exp.(-2*pi*im*k*omega*n))/tot_wt
         println(abs(x_k))
 
