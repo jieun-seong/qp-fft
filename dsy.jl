@@ -8,27 +8,31 @@ function get_wt_array(L)
     return wt_array
 end
 
-for N in 1:2000
+println("#1:N   #2:k   #3:classical   #4:dsy")
 
-    print(N, "  ")
+for N in 1:2000
 
     omega = (sqrt(5)-1)/2
     x(p) = sin(omega*p)
     n = collect(-N:1:N)
     x_n_array = x.(n)
 
-    k = 100
+    for k in -10:10
+        
+        print(N, "  ", k, "  ")
     
-    #original
-    x_k = 1/(2*N+1)*sum(x_n_array.*exp.(-2*pi*im*k*omega*n))
-    print(abs(x_k), "  ")
-    
-    #DSY
-    wt_array = get_wt_array(2*N+1)
-    tot_wt = sum(wt_array)
-    x_k = sum(wt_array.*x_n_array.*exp.(-2*pi*im*k*omega*n))/tot_wt
-    println(abs(x_k))
+        #Classical
+        x_k = 1/(2*N+1)*sum(x_n_array.*exp.(-2*pi*im*k*omega*n))
+        print(abs(x_k), "  ")
 
+        #DSY
+        wt_array = get_wt_array(2*N+1)
+        tot_wt = sum(wt_array)
+        x_k = sum(wt_array.*x_n_array.*exp.(-2*pi*im*k*omega*n))/tot_wt
+        println(abs(x_k))
+
+    end #for k
+    
 end #for N
 
 
